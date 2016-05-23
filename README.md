@@ -2,6 +2,7 @@
 
 ## Description
 
+Web site skeleton with Slim3 PHP framework as backend and AngularJS as frontend. 
 
 ## Installation and configuration
 
@@ -18,11 +19,12 @@ php: >=5.5.9
 ## Development
 
 1. Backend
-..* Slim3 - http://www.slimframework.com/
-..* Eloquent ORM - https://laravel.com/docs/4.2/eloquent
+  * Slim3 - http://www.slimframework.com/
+  * Eloquent ORM - https://laravel.com/docs/4.2/eloquent
 2. Frontend
-..* AngularJS 1.5.2
-..* Lumino admin template (Bootstrap v3.2.0) - http://medialoot.com/item/lumino-admin-bootstrap-template/ 
+  * AngularJS 1.5.2
+  * Lumino admin template (Bootstrap v3.2.0) - http://medialoot.com/item/lumino-admin-bootstrap-template/
+  * Gulp 
 
 Before changing frontend go to /public folder and install gulp and gulp modules:
 ```
