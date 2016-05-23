@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?php echo $app_name; ?></title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+<link href="css/app.css" rel="stylesheet">
+
+<!--Icons-->
+<script src="js/lumino.glyphs.js"></script>
+<!-- angular -->
+<script src="js/angular_1.5.2.min.js"></script>
+<script src="js/angular-ui-router.min.js"></script>
+<script src="js/angular-cookies.min.js"></script>
+<script src="js/main.js"></script>
+
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"><?php echo $app_name; ?></a>
+			</div>
+							
+		</div><!-- /.container-fluid -->
+	</nav>
+		
+	<div ng-controller="SidebarCtrl">
+		<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar" ng-show="currentUser.fullname">
+			<div class="app-user-container">
+				<svg style="width: 25px; height: 25px; stroke-width: 3px;"><use xlink:href="#stroked-male-user"/></svg><br />
+				{{currentUser.fullname}}<br />
+				<a class="" ui-sref="logout">Logout</a>
+			</div>
+			<ul class="nav menu">
+				<li><a href="/"><svg class="glyph stroked email"><use xlink:href="#stroked-email"/></svg> Dashboard</a></li>
+				<li><a href="/"><svg class="glyph stroked email"><use xlink:href="#stroked-email"/></svg> Users</a></li>
+			</ul>
+		</div><!--/.sidebar-->
+	</div>
+		
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+	
+		<div ui-view></div>
+	
+	</div>	<!--/.main-->
+
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+</body>
+
+</html>

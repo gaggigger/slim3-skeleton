@@ -14,7 +14,8 @@ Web site skeleton with Slim3 PHP framework as backend and AngularJS as frontend.
 
 ## Requirements
 
-php: >=5.5.9
+PHP: >=5.5.9
+MySQL: >=5.5.3
 
 ## Development
 
