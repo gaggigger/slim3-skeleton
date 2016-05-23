@@ -18,6 +18,15 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
+// database
+$container['db'] = function ($c) {
+    $capsule = new \Illuminate\Database\Capsule\Manager;
+    $capsule->addConnection($c->get('settings')['database']);
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
+    return $capsule;
+};
+
 // token
 $container['token'] = function ($c) {
 	$token = '';

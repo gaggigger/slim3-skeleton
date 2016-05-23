@@ -1,7 +1,7 @@
 # Slim Framework
 
 [![Build Status](https://travis-ci.org/slimphp/Slim.svg?branch=develop)](https://travis-ci.org/slimphp/Slim)
-[![Coverage Status](https://coveralls.io/repos/slimphp/Slim/badge.svg?branch=develop)](https://coveralls.io/r/slimphp/Slim?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/slimphp/Slim/badge.svg)](https://coveralls.io/r/slimphp/Slim)
 [![Total Downloads](https://poser.pugx.org/slim/slim/downloads)](https://packagist.org/packages/slim/slim)
 [![License](https://poser.pugx.org/slim/slim/license)](https://packagist.org/packages/slim/slim)
 
@@ -12,7 +12,7 @@ Slim is a PHP micro-framework that helps you quickly write simple yet powerful w
 It's recommended that you use [Composer](https://getcomposer.org/) to install Slim.
 
 ```bash
-$ composer require slim/slim "^3.0@RC"
+$ composer require slim/slim "^3.0"
 ```
 
 This will install Slim and all required dependencies. Slim requires PHP 5.5.0 or newer.
