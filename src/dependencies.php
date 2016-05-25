@@ -19,21 +19,7 @@ $container['logger'] = function ($c) {
 };
 
 // database
-$container['db'] = function ($c) {
-    $capsule = new \Illuminate\Database\Capsule\Manager;
-    $capsule->addConnection($c->get('settings')['database']);
-    $capsule->setAsGlobal();
-    $capsule->bootEloquent();
-    return $capsule;
-};
-
-// token
-$container['token'] = function ($c) {
-	$token = '';
-	$chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789';
-	$chars_length=(strlen($chars)-1);
-	for ($i=0; $i<25; $i++) {
-		$token .= $chars{rand(0, $chars_length)};
-	}
-	return $token;
-};
+$capsule = new Illuminate\Database\Capsule\Manager;
+$capsule->addConnection($settings['settings']['database']);
+$capsule->setAsGlobal();
+$capsule->bootEloquent();

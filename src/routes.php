@@ -10,7 +10,7 @@ $app->group('/api', function () {
 	
 	$this->get('/test', '\App\Controllers\Test:testdb');
 	$this->post('/login', '\App\Controllers\Authentication:login');
-	$this->post('/refreshToken', '\App\Controllers\Authentication:refreshToken');
+	$this->post('/refreshToken', '\App\Controllers\Authentication:refresh_token');
 	
 	//GET DATA EXAMPLE
 	$this->get('/send_messages', function ($request, $response) {

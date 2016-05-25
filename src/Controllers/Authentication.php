@@ -22,36 +22,29 @@ class Authentication {
 		);
 		
 		if (isset($data) && array_key_exists('username', $data) && array_key_exists('password', $data)) {
-			$stmt = $this->db->prepare("SELECT * FROM users WHERE (username = :username) LIMIT 1");
-			$stmt->execute(["username" => $data['username']]);
-			$user = $stmt->fetch();
+			$user = \App\Models\Users::where('username', $data['username'])->first();
 			if ($user) {
-				if (password_verify($data['password'], $user['password'])) {
-					$new_token = $this->token;
-					$valid_to = new DateTime();
-					$valid_to->modify('+'.$this->settings['login_token_valid_days'].' day');
-					$sql = "INSERT INTO user_tokens (user_id, token, valid_to) VALUES (:user_id, :token, :valid_to)";
-					$statement = $this->db->prepare($sql);
-					$statement->bindValue(':user_id', $user['id']);
-					$statement->bindValue(':token', $new_token);
-					$statement->bindValue(':valid_to', $valid_to->format('Y-m-d H:i:s'));
+				if (password_verify($data['password'], $user->password)) {
+					$token = new \App\Models\UserTokens();
+					$token->user_id = $user->id;
+					$token->token = \App\Models\UserTokens::generate_token(30);
+					$token->valid_to = (new \DateTime())->modify('+'.$this->ci->settings['login_token_valid_days'].' day');
 					try {
-						$statement->execute();
+						$token->save();
 						$ret = array(
 							"status" => "OK",
 							"message" => "user and password ok",
 							"user" => array (
 								"username" => $user['username'],
 								"fullname" => $user['first_name'].' '.$user['last_name'],
-								"token" => $new_token,
-								"valid_days" => $this->settings['login_token_valid_days']
+								"token" => $token->token,
+								"valid_days" => $this->ci->settings['login_token_valid_days']
 							)
 						);
 					} 
-					catch(PDOException $exception) { 
-						//$this->logger->addInfo($exception->getMessage());
-					}
-					
+					catch(\Illuminate\Database\QueryException $e) { 
+						//$this->ci->logger->addInfo($e->getMessage());
+					}					
 				}
 			}
 		}
@@ -62,7 +55,7 @@ class Authentication {
 	// ==================================================
 	//                  REFRESH TOKEN
 	// ==================================================
-	public function refreshToken($request, $response, $args) {
+	public function refresh_token($request, $response, $args) {
 		
 		$token = $request->getBody();
 		
@@ -76,7 +69,7 @@ class Authentication {
 			$stmt->execute(["token1" => $token, "valid_to" => date('Y-m-d H:i:s')]);
 			$user_token = $stmt->fetch();
 			if ($user_token) {
-				//$this->logger->addInfo(json_encode($user_token));
+				//$this->ci->logger->addInfo(json_encode($user_token));
 				try {
 					//update token valid_to
 					$valid_to = new DateTime();
