@@ -62,6 +62,14 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
         		requireLogin: true
       		}
     	})
+		.state('users', {
+      		url: '/users',
+			controller: 'UsersCtrl',
+			templateUrl: 'modules/users/users.view.html',
+      		data: {
+        		requireLogin: true
+      		}
+    	})
 });
 
 myServices.factory('AuthenticationService', AuthenticationService);
@@ -105,8 +113,7 @@ function AuthenticationService($http, $rootScope, MY_CONFIG, $cookies) {
     return service;
 };
 
-myControllers.controller('DashboardCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', 'AuthenticationService', function($rootScope, $scope, $state, $http, MY_CONFIG, AuthenticationService) {
-	
+myControllers.controller('DashboardCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', function($rootScope, $scope, $state, $http, MY_CONFIG) {
 
 }]);
 
@@ -131,8 +138,16 @@ myControllers.controller('LoginCtrl', ['$rootScope', '$scope', '$state', 'Authen
 
 }]);
 
-myControllers.controller('SidebarCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+myControllers.controller('SidebarCtrl', ['$scope', '$rootScope', '$location', function($scope, $rootScope, $location) {
 
 	$scope.currentUser.fullname = $rootScope.currentUser.fullname;
 	
+	$scope.isActive = function (viewLocation) {
+		return (viewLocation === $location.path());
+	};
+	
+}]);
+
+myControllers.controller('UsersCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', function($rootScope, $scope, $state, $http, MY_CONFIG) {
+
 }]);

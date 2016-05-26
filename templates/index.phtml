@@ -48,8 +48,8 @@
 				<a class="" ui-sref="logout">Logout</a>
 			</div>
 			<ul class="nav menu">
-				<li><a href="/"><svg class="glyph stroked email"><use xlink:href="#stroked-email"/></svg> Dashboard</a></li>
-				<li><a href="/"><svg class="glyph stroked email"><use xlink:href="#stroked-email"/></svg> Users</a></li>
+				<li ng-class="{active: isActive('/dashboard')}"><a href="#dashboard"><svg class="glyph stroked dashboard dial"><use xlink:href="#stroked-dashboard-dial"/></svg> Dashboard</a></li>
+				<li ng-class="{active: isActive('/users')}"><a href="#users"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"/></svg> Users</a></li>
 			</ul>
 		</div><!--/.sidebar-->
 	</div>
