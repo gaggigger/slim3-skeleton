@@ -9,6 +9,7 @@ myApp.constant("MY_CONFIG", {
 		"COOKIE_NAME": "slim3_skeleton_user",
 		"API_LOGIN": API_SERVER + "/login",
 		"API_REFRESH_TOKEN": API_SERVER + "/refreshToken",
+		"API_USERS": API_SERVER + "/users",
 });
 
 myApp.run(['$state', '$rootScope', '$location', '$cookies', '$http', 'MY_CONFIG', 'AuthenticationService', function ($state, $rootScope, $location, $cookies, $http, MY_CONFIG, AuthenticationService) {

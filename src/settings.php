@@ -10,8 +10,8 @@ return [
 
         // Monolog settings
         'logger' => [
-            'name' => '',
-            'path' => __DIR__ . '/../logs/app.log',
+            'name' => 'LOG',
+            'path' => __DIR__ . '/../logs/'.date('Y-m').'.log',
         ],
 		// Database settings
 		'database' => [

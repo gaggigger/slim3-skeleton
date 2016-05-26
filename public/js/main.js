@@ -9,6 +9,7 @@ myApp.constant("MY_CONFIG", {
 		"COOKIE_NAME": "slim3_skeleton_user",
 		"API_LOGIN": API_SERVER + "/login",
 		"API_REFRESH_TOKEN": API_SERVER + "/refreshToken",
+		"API_USERS": API_SERVER + "/users",
 });
 
 myApp.run(['$state', '$rootScope', '$location', '$cookies', '$http', 'MY_CONFIG', 'AuthenticationService', function ($state, $rootScope, $location, $cookies, $http, MY_CONFIG, AuthenticationService) {
@@ -149,5 +150,11 @@ myControllers.controller('SidebarCtrl', ['$scope', '$rootScope', '$location', fu
 }]);
 
 myControllers.controller('UsersCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', function($rootScope, $scope, $state, $http, MY_CONFIG) {
-
+	$http.get(MY_CONFIG.API_USERS)
+		.success(function (response) {
+			$scope.data = response.data;
+		})
+		.error(function(data, status, headers, config) {
+			alert( "failure message: " + JSON.stringify({data: data}));
+		});
 }]);
