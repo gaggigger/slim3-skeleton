@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model as Model;
 class UserTokens extends Model {
 	
 	protected $table = 'user_tokens';
+	public $timestamps = true;
 	
 	public static function generate_token($_size) {
 		$token = '';

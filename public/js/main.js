@@ -6,13 +6,14 @@ var myServices = angular.module('myServices', []);
 var API_SERVER = "/api";
 
 myApp.constant("MY_CONFIG", {
+		"COOKIE_NAME": "slim3_skeleton_user",
 		"API_LOGIN": API_SERVER + "/login",
 		"API_REFRESH_TOKEN": API_SERVER + "/refreshToken",
 });
 
 myApp.run(['$state', '$rootScope', '$location', '$cookies', '$http', 'MY_CONFIG', 'AuthenticationService', function ($state, $rootScope, $location, $cookies, $http, MY_CONFIG, AuthenticationService) {
 	// refresh token if it is set after page refresh
-	$rootScope.currentUser = $cookies.getObject('currentUser') || false;
+	$rootScope.currentUser = $cookies.getObject(MY_CONFIG.COOKIE_NAME) || false;
 	if ($rootScope.currentUser) {
 		$http.defaults.headers.common['Authorization'] = $rootScope.currentUser.token; //ovo stavim jer mi kod F5 na neku stranicu prvo ucita stranicu, pa onda napravi refresh
 	    AuthenticationService.RefreshToken($rootScope.currentUser.token, function (response) {
@@ -90,14 +91,14 @@ function AuthenticationService($http, $rootScope, MY_CONFIG, $cookies) {
 		$rootScope.currentUser = user;
 		var expire_date = new Date();
         expire_date.setDate(expire_date.getDate() + $rootScope.currentUser.valid_days);
-        $cookies.putObject('currentUser', $rootScope.currentUser, {expires: expire_date});
+        $cookies.putObject(MY_CONFIG.COOKIE_NAME, $rootScope.currentUser, {expires: expire_date});
 		$http.defaults.headers.common['Authorization'] = $rootScope.currentUser.token;
     };
 
 	service.ClearCredentials = function () {
         $rootScope.currentUser = false;
 		$rootScope.menus = false;
-        $cookies.remove('currentUser');
+        $cookies.remove(MY_CONFIG.COOKIE_NAME);
         $http.defaults.headers.common['Authorization'] = '';
     };
 

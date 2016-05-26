@@ -27,7 +27,7 @@ class Authentication {
 				if (password_verify($data['password'], $user->password)) {
 					$token = new \App\Models\UserTokens();
 					$token->user_id = $user->id;
-					$token->token = \App\Models\UserTokens::generate_token(30);
+					$token->token = \App\Models\UserTokens::generate_token(40);
 					$token->valid_to = (new \DateTime())->modify('+'.$this->ci->settings['login_token_valid_days'].' day');
 					try {
 						$token->save();
@@ -35,8 +35,8 @@ class Authentication {
 							"status" => "OK",
 							"message" => "user and password ok",
 							"user" => array (
-								"username" => $user['username'],
-								"fullname" => $user['first_name'].' '.$user['last_name'],
+								//"username" => $user->username,
+								"fullname" => $user->first_name.' '.$user->last_name,
 								"token" => $token->token,
 								"valid_days" => $this->ci->settings['login_token_valid_days']
 							)
@@ -65,37 +65,30 @@ class Authentication {
 		);
 		
 		if (isset($token)) {
-			$stmt = $this->db->prepare("SELECT * FROM user_tokens WHERE (token = :token1) AND (valid_to > :valid_to) LIMIT 1");
-			$stmt->execute(["token1" => $token, "valid_to" => date('Y-m-d H:i:s')]);
-			$user_token = $stmt->fetch();
+			$user_token = \App\Models\UserTokens::where('token', '=', $token)->where('valid_to', '>', date('Y-m-d H:i:s'))->first();
 			if ($user_token) {
-				//$this->ci->logger->addInfo(json_encode($user_token));
 				try {
 					//update token valid_to
-					$valid_to = new DateTime();
-					$valid_to->modify('+'.$this->settings['login_token_valid_days'].' day');
-					$stmt2 = $this->db->prepare("UPDATE user_tokens SET valid_to = :valid_to WHERE (id = :id)");
-					$stmt2->execute(["id" => $user_token['id'], "valid_to" => $valid_to->format('Y-m-d H:i:s')]);
+					$user_token->valid_to = (new \DateTime())->modify('+'.$this->ci->settings['login_token_valid_days'].' day');
+					$user_token->save();
 					//get user info
-					$stmt3 = $this->db->prepare("SELECT * FROM users WHERE (id = :id) LIMIT 1");
-					$stmt3->execute(["id" => $user_token['user_id']]);
-					$user = $stmt3->fetch();
+					$user = \App\Models\Users::find($user_token->user_id);
 					//construct refresh token
 					if ($user) {
 						$ret = array(
 							"status" => "OK",
 							"message" => "token refreshed",
 							"user" => array (
-								"username" => $user['username'],
-								"fullname" => $user['first_name'].' '.$user['last_name'],
-								"token" => $user_token['token'],
-								"valid_days" => $this->settings['login_token_valid_days']
+								//"username" => $user->username,
+								"fullname" => $user->first_name.' '.$user->last_name,
+								"token" => $user_token->token,
+								"valid_days" => $this->ci->settings['login_token_valid_days']
 							)
 						);
 					}
 				}
-				catch(PDOException $exception) { 
-					$this->logger->addInfo($exception->getMessage());
+				catch(\Illuminate\Database\QueryException $e) { 
+					$this->ci->logger->addInfo($e->getMessage());
 				}
 			}
 		}
