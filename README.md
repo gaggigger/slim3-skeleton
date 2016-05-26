@@ -10,7 +10,7 @@ Web site skeleton with Slim3 PHP framework as backend and AngularJS as frontend.
 2. create and configure database (use SQL statements in /docs/sql.txt file)
 3. configure application settings in /src/settings.php
 4. make sure /logs is writeable by web server
-5. open web site and log in with: test/test
+5. open web site and log in with: test / test123
 
 ## Requirements
 
