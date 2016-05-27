@@ -6,4 +6,5 @@ myControllers.controller('UsersCtrl', ['$rootScope', '$scope', '$state', '$http'
 		.error(function(data, status, headers, config) {
 			alert( "failure message: " + JSON.stringify({data: data}));
 		});
+	
 }]);
