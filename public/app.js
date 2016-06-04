@@ -10,6 +10,8 @@ myApp.constant("MY_CONFIG", {
 		"API_LOGIN": API_SERVER + "/login",
 		"API_REFRESH_TOKEN": API_SERVER + "/refreshToken",
 		"API_USERS": API_SERVER + "/users",
+		"API_USER_UPDATE": API_SERVER + "/userupdate",
+		"API_USER_DELETE": API_SERVER + "/userdelete",
 });
 
 myApp.run(['$state', '$rootScope', '$location', '$cookies', '$http', 'MY_CONFIG', 'AuthenticationService', function ($state, $rootScope, $location, $cookies, $http, MY_CONFIG, AuthenticationService) {
@@ -67,6 +69,14 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
       		url: '/users',
 			controller: 'UsersCtrl',
 			templateUrl: 'modules/users/users.view.html',
+      		data: {
+        		requireLogin: true
+      		}
+    	})
+		.state('usersedit', {
+      		url: '/users/{id:int}',
+			controller: 'UsersEditCtrl',
+			templateUrl: 'modules/users/users.edit.html',
       		data: {
         		requireLogin: true
       		}

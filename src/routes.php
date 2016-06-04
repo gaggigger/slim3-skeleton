@@ -15,6 +15,9 @@ $app->group('/api', function () {
 	$this->post('/refreshToken', '\App\Controllers\Authentication:refresh_token');
 	//users
 	$this->get('/users', '\App\Controllers\Users:getall')->add(new AuthMw(['admin'], $this->getContainer()));
+	$this->get('/users/{id}', '\App\Controllers\Users:get')->add(new AuthMw(['admin'], $this->getContainer()));
+	$this->post('/userupdate/{id}', '\App\Controllers\Users:update')->add(new AuthMw(['admin'], $this->getContainer()));
+	$this->get('/userdelete/{id}', '\App\Controllers\Users:delete')->add(new AuthMw(['admin'], $this->getContainer()));
 	$this->post('/users', '\App\Controllers\Users:add')->add(new AuthMw(['admin'], $this->getContainer()));
 
 });
