@@ -5,7 +5,7 @@ CREATE TABLE `users` (
   `first_name` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_name` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `group_admin` bit DEFAULT 0, 
+  `group_admin` tinyint DEFAULT '0', 
   `updated_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),

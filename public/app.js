@@ -71,6 +71,14 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
         		requireLogin: true
       		}
     	})
+		.state('usersadd', {
+      		url: '/usersadd',
+			controller: 'UsersAddCtrl',
+			templateUrl: 'modules/users/users.add.html',
+      		data: {
+        		requireLogin: true
+      		}
+    	})
 });
 
 myServices.factory('AuthenticationService', AuthenticationService);

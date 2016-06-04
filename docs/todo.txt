@@ -1,6 +1,8 @@
-- postavljanje menija (nakon logina broadcast grupa prema sidebarCtrl-u)
-- kreiranje usera
++ postavljanje menija (nakon logina broadcast grupa prema sidebarCtrl-u)
++ kreiranje usera
+- validacija podataka server sidde i prikazivanje gresaka client side
 - editiranje usera
 - promjena passworda
 - brisanje usera
 - smart tables for angular za tablicu usera
+- root.scope metodu koja prikazuje poruku u header meniju
