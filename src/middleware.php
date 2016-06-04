@@ -15,11 +15,15 @@ class AuthMw
 
 	public function __invoke($request, $response, $next)
 	{
-		$this->ci->logger->addInfo('grupe sa dozvolom: '.json_encode($this->groups));
+		//$this->ci->logger->addInfo('grupe sa dozvolom: '.json_encode($this->groups));
 		if ($request->hasHeader('Authorization')) {
-			$this->ci->logger->addInfo('token: '.$request->getHeaderLine('Authorization'));
-		}
-		$response = $next($request, $response);
-		return $response;
+			$user_token = \App\Models\UserTokens::where('token', '=', $request->getHeaderLine('Authorization'))->where('valid_to', '>', date('Y-m-d H:i:s'))->first();
+			if ($user_token) {
+				if (\App\Models\Users::isUserInGroup($user_token->user_id, $this->groups)) {
+					return $next($request, $response);
+				}
+			}
+		}		
+		return $response->withJson(['status'=>'AUTH ERROR', 'message'=>'unauthorized access']);
 	}
 }

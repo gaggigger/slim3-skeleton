@@ -38,7 +38,8 @@ class Authentication {
 								//"username" => $user->username,
 								"fullname" => $user->first_name.' '.$user->last_name,
 								"token" => $token->token,
-								"valid_days" => $this->ci->settings['login_token_valid_days']
+								"valid_days" => $this->ci->settings['login_token_valid_days'],
+								"groups" => ["admin"=>$user->group_admin]
 							)
 						);
 					} 
@@ -82,7 +83,8 @@ class Authentication {
 								//"username" => $user->username,
 								"fullname" => $user->first_name.' '.$user->last_name,
 								"token" => $user_token->token,
-								"valid_days" => $this->ci->settings['login_token_valid_days']
+								"valid_days" => $this->ci->settings['login_token_valid_days'],
+								"groups" => ["admin"=>$user->group_admin]
 							)
 						);
 					}

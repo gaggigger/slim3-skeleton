@@ -5,14 +5,15 @@ CREATE TABLE `users` (
   `first_name` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_name` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `group_admin` bit DEFAULT 0, 
   `updated_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `users` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `updated_at`, `created_at`) VALUES
-(1,	'test',	'$2y$10$bbrzW58jfYaQ42Xa9CwITegzrg.oizrNPwAzeIZ2QYlog9USSNQFS',	'Test',	'User',	'test.user@mail.com',	NOW(),	NOW());
+INSERT INTO `users` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `group_admin`, `updated_at`, `created_at`) VALUES
+(1,	'test',	'$2y$10$bbrzW58jfYaQ42Xa9CwITegzrg.oizrNPwAzeIZ2QYlog9USSNQFS',	'Test',	'User',	'test.user@mail.com', 1, NOW(), NOW());
 
 CREATE TABLE `user_tokens` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,

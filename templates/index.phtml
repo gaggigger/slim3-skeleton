@@ -49,7 +49,7 @@
 			</div>
 			<ul class="nav menu">
 				<li ng-class="{active: isActive('/dashboard')}"><a href="#dashboard"><svg class="glyph stroked dashboard dial"><use xlink:href="#stroked-dashboard-dial"/></svg> Dashboard</a></li>
-				<li ng-class="{active: isActive('/users')}"><a href="#users"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"/></svg> Users</a></li>
+				<li ng-show="currentUser.groups.admin == 1" ng-class="{active: isActive('/users')}"><a href="#users"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"/></svg> Users</a></li>
 			</ul>
 		</div><!--/.sidebar-->
 	</div>

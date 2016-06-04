@@ -4,7 +4,7 @@ myControllers.controller('LoginCtrl', ['$rootScope', '$scope', '$state', 'Authen
 	AuthenticationService.ClearCredentials();
 
 	$scope.login = function(credentials) {
-		$scope.dataLoading = true;
+		$scope.data_loading = true;
 		AuthenticationService.Login(credentials, function (response) {
 			if (response.status == 'OK') {
 				AuthenticationService.SetCredentials(response.user);
@@ -12,7 +12,7 @@ myControllers.controller('LoginCtrl', ['$rootScope', '$scope', '$state', 'Authen
 			} else {
 				AuthenticationService.ClearCredentials();
 				$scope.error = response.message;
-				$scope.dataLoading = false;
+				$scope.data_loading = false;
 			}
 		});
 	};

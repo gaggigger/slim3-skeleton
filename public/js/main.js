@@ -124,7 +124,7 @@ myControllers.controller('LoginCtrl', ['$rootScope', '$scope', '$state', 'Authen
 	AuthenticationService.ClearCredentials();
 
 	$scope.login = function(credentials) {
-		$scope.dataLoading = true;
+		$scope.data_loading = true;
 		AuthenticationService.Login(credentials, function (response) {
 			if (response.status == 'OK') {
 				AuthenticationService.SetCredentials(response.user);
@@ -132,7 +132,7 @@ myControllers.controller('LoginCtrl', ['$rootScope', '$scope', '$state', 'Authen
 			} else {
 				AuthenticationService.ClearCredentials();
 				$scope.error = response.message;
-				$scope.dataLoading = false;
+				$scope.data_loading = false;
 			}
 		});
 	};
@@ -142,6 +142,7 @@ myControllers.controller('LoginCtrl', ['$rootScope', '$scope', '$state', 'Authen
 myControllers.controller('SidebarCtrl', ['$scope', '$rootScope', '$location', function($scope, $rootScope, $location) {
 
 	$scope.currentUser.fullname = $rootScope.currentUser.fullname;
+	$scope.currentUser.groups = $rootScope.currentUser.groups;
 	
 	$scope.isActive = function (viewLocation) {
 		return (viewLocation === $location.path());
@@ -149,13 +150,28 @@ myControllers.controller('SidebarCtrl', ['$scope', '$rootScope', '$location', fu
 	
 }]);
 
-myControllers.controller('UsersCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', function($rootScope, $scope, $state, $http, MY_CONFIG) {
-	$http.get(MY_CONFIG.API_USERS)
-		.success(function (response) {
-			$scope.data = response.data;
-		})
-		.error(function(data, status, headers, config) {
-			alert( "failure message: " + JSON.stringify({data: data}));
-		});
+myControllers.controller('UsersCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', 'AuthenticationService', function($rootScope, $scope, $state, $http, MY_CONFIG, AuthenticationService) {
+	
+	$scope.load_data = function () {
+		$scope.data_loading = true;
+		$http.get(MY_CONFIG.API_USERS)
+			.success(function (response) {
+				if (response.status == 'OK') $scope.data = response.data;
+				if (response.status == 'ERROR') alert(response.message);
+				if (response.status == 'AUTH ERROR') {
+					AuthenticationService.ClearCredentials();
+					$state.go('login');
+				}
+				$scope.data_loading = false;
+			})
+			.error(function(data, status, headers, config) {
+				alert(JSON.stringify({data: data}));
+				$scope.data_loading = false;
+			});
+	};
+	
+	$scope.data_loading = false;
+	$scope.data = null;
+	$scope.load_data();	
 	
 }]);
