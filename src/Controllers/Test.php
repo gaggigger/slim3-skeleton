@@ -11,7 +11,7 @@ class Test {
 	}
 
 	public function test($request, $response, $args) {
-		$data = array('name' => 'Bob', 'age' => 40, 'test' => 'pa ovo radi !!!', 'valid_days' => $this->ci->settings['login_token_valid_days']);
+		$data = \App\Models\Users::orderBy('id', 'desc')->skip(1)->take(1)->get();
 		return $response->withJson($data);
 	}
 	

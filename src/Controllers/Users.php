@@ -14,13 +14,20 @@ class Users {
 		$ret = array(
 			"status" => "OK",
 			"message" => "data fetched",
-			"data" => \App\Models\Users::all()
+			"data" => array(
+				"items" => \App\Models\Users::select('id', 'username', 'first_name', 'last_name', 'email', 'group_admin', 'updated_at', 'created_at')
+								->orderBy('id', 'asc')
+								->skip(($args['page']-1)*$args['pageSize'])
+								->take($args['pageSize'])
+								->get(),
+				"totalItems" => \App\Models\Users::count()
+			)
 		);
 		return $response->withJson($ret);
 	}
 	
 	public function get($request, $response, $args) {
-		$ret = array("status" => "ERROR", "message" => "Unknown data");
+		$ret = array("status" => "ERROR", "message" => "unknown data1");
 		$data = \App\Models\Users::where('id', $args['id'])->select('username', 'first_name', 'last_name', 'email', 'group_admin')->first();
 		if ($data) {
 			$ret = array(
@@ -33,7 +40,7 @@ class Users {
 	}
 	
 	public function update($request, $response, $args) {
-		$ret = array("status" => "ERROR", "message" => "Unknown data");
+		$ret = array("status" => "ERROR", "message" => "unknown data2");
 		$data = $request->getParams();
 		$user = \App\Models\Users::find($args['id']);
 		if ($user) {
@@ -58,7 +65,7 @@ class Users {
 	}
 	
 	public function delete($request, $response, $args) {
-		$ret = array("status" => "ERROR", "message" => "Unknown data");
+		$ret = array("status" => "ERROR", "message" => "unknown data3");
 		if (\App\Models\Users::destroy($args['id'])) {
 			\App\Models\UserTokens::where('user_id', $args['id'])->delete();
 			$ret = array("status" => "OK", "message" => "user deleted");
@@ -83,7 +90,7 @@ class Users {
 		}
 		try {
 			$user->save();
-			$ret = array("status" => "OK", "message" => "user saved");
+			$ret = array("status" => "OK", "message" => "new user saved");
 		} catch (\Illuminate\Database\QueryException $e) {
 			$ret = array("status" => "ERROR", "message" => $e->getMessage());
 		}		

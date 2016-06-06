@@ -19,7 +19,13 @@ $container['logger'] = function ($c) {
 };
 
 // database
-$capsule = new Illuminate\Database\Capsule\Manager;
-$capsule->addConnection($settings['settings']['database']);
-$capsule->setAsGlobal();
-$capsule->bootEloquent();
+$container['db'] = function ($c) {
+    $capsule = new Illuminate\Database\Capsule\Manager;
+	$capsule->addConnection($c->get('settings')['database']);
+	//$capsule->setAsGlobal();
+	//$capsule->bootEloquent();
+	return $capsule;
+};
+
+$container['db']->setAsGlobal();
+$container['db']->bootEloquent();

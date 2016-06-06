@@ -1,10 +1,15 @@
 myControllers.controller('UsersCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', 'AuthenticationService', function($rootScope, $scope, $state, $http, MY_CONFIG, AuthenticationService) {
 	
-	$scope.load_data = function () {
+	$scope.load_data = function (page, pageSize) {
 		$scope.data_loading = true;
-		$http.get(MY_CONFIG.API_USERS)
+		$http.get(MY_CONFIG.API_USERS + "/" + page + "/" + pageSize)
 			.success(function (response) {
-				if (response.status == 'OK') $scope.data = response.data;
+				if (response.status == 'OK') {
+					$scope.data = response.data.items;
+					$scope.totalItems = response.data.totalItems;
+					$scope.totalPages = Math.ceil(response.data.totalItems/pageSize);
+					$scope.page = page;
+				}
 				if (response.status == 'ERROR') alert(response.message);
 				if (response.status == 'AUTH ERROR') {
 					AuthenticationService.ClearCredentials();
@@ -20,17 +25,20 @@ myControllers.controller('UsersCtrl', ['$rootScope', '$scope', '$state', '$http'
 	
 	$scope.data_loading = false;
 	$scope.data = null;
-	$scope.load_data();	
+	$scope.page = 1;
+	$scope.pageSize = 5;
+	$scope.totalItems = 0;
+	$scope.load_data($scope.page, $scope.pageSize);
 	
 }]);
 
-myControllers.controller('UsersEditCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', '$stateParams', function($rootScope, $scope, $state, $http, MY_CONFIG, $stateParams) {
+myControllers.controller('UsersEditCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', '$stateParams', 'flash', function($rootScope, $scope, $state, $http, MY_CONFIG, $stateParams, flash) {
 	
-	$scope.submit = function(data) {
+	$scope.submit_form = function(data) {
 		$scope.data_loading = true;
 		$http.post(MY_CONFIG.API_USER_UPDATE + "/" + $stateParams.id, data)
 			.success(function (response) {
-				if (response.status == 'OK') $state.go('users');
+				if (response.status == 'OK') {  $state.go('users'); flash('success', response.message); }
 				if (response.status == 'ERROR') alert(response.message);
 				if (response.status == 'AUTH ERROR') {
 					AuthenticationService.ClearCredentials();
@@ -48,7 +56,7 @@ myControllers.controller('UsersEditCtrl', ['$rootScope', '$scope', '$state', '$h
 		$scope.data_loading = true;
 		$http.get(MY_CONFIG.API_USER_DELETE + "/" + $id)
 			.success(function (response) {
-				if (response.status == 'OK') $state.go('users');
+				if (response.status == 'OK') { $state.go('users'); flash('success', response.message); }
 				if (response.status == 'ERROR') alert(response.message);
 				if (response.status == 'AUTH ERROR') {
 					AuthenticationService.ClearCredentials();
@@ -82,13 +90,13 @@ myControllers.controller('UsersEditCtrl', ['$rootScope', '$scope', '$state', '$h
 	$scope.user_id = $stateParams.id;
 }]);
 
-myControllers.controller('UsersAddCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', function($rootScope, $scope, $state, $http, MY_CONFIG) {
+myControllers.controller('UsersAddCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', 'flash', function($rootScope, $scope, $state, $http, MY_CONFIG, flash) {
 	
 	$scope.submit = function(data) {
 		$scope.data_loading = true;
 		$http.post(MY_CONFIG.API_USERS, data)
 			.success(function (response) {
-				if (response.status == 'OK') $state.go('users');
+				if (response.status == 'OK') { $state.go('users'); flash('success', response.message); }
 				if (response.status == 'ERROR') alert(response.message);
 				if (response.status == 'AUTH ERROR') {
 					AuthenticationService.ClearCredentials();

@@ -1,6 +1,6 @@
 /* ================== App Module ================== */
 
-var myApp = angular.module('myApp', ['ui.router','myControllers','myServices','ngCookies']);
+var myApp = angular.module('myApp', ['ui.router','myControllers','myServices','ngCookies','flash']);
 var myControllers = angular.module('myControllers', []);
 var myServices = angular.module('myServices', []);
 var API_SERVER = "/api";
