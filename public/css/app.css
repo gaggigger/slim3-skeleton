@@ -12,3 +12,8 @@
      -o-animation: spin 1.2s infinite linear;
      animation: spin 1.2s infinite linear;
 }
+.flash-msg{
+	padding-left: 0;
+    padding-right: 0;
+	text-align: center;
+}

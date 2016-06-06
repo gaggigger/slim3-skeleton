@@ -1,4 +1,4 @@
-myControllers.controller('UsersCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', 'AuthenticationService', function($rootScope, $scope, $state, $http, MY_CONFIG, AuthenticationService) {
+myControllers.controller('UsersCtrl', ['$scope', '$state', '$http', 'MY_CONFIG', 'AuthenticationService', function($scope, $state, $http, MY_CONFIG, AuthenticationService) {
 	
 	$scope.load_data = function (page, pageSize) {
 		$scope.data_loading = true;
@@ -32,7 +32,7 @@ myControllers.controller('UsersCtrl', ['$rootScope', '$scope', '$state', '$http'
 	
 }]);
 
-myControllers.controller('UsersEditCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', '$stateParams', 'flash', function($rootScope, $scope, $state, $http, MY_CONFIG, $stateParams, flash) {
+myControllers.controller('UsersEditCtrl', ['$scope', '$state', '$http', 'MY_CONFIG', '$stateParams', 'flash', function($scope, $state, $http, MY_CONFIG, $stateParams, flash) {
 	
 	$scope.submit_form = function(data) {
 		$scope.data_loading = true;
@@ -90,7 +90,7 @@ myControllers.controller('UsersEditCtrl', ['$rootScope', '$scope', '$state', '$h
 	$scope.user_id = $stateParams.id;
 }]);
 
-myControllers.controller('UsersAddCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', 'flash', function($rootScope, $scope, $state, $http, MY_CONFIG, flash) {
+myControllers.controller('UsersAddCtrl', ['$scope', '$state', '$http', 'MY_CONFIG', 'flash', function($scope, $state, $http, MY_CONFIG, flash) {
 	
 	$scope.submit = function(data) {
 		$scope.data_loading = true;
