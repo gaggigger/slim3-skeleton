@@ -22,10 +22,13 @@ $container['logger'] = function ($c) {
 $container['db'] = function ($c) {
     $capsule = new Illuminate\Database\Capsule\Manager;
 	$capsule->addConnection($c->get('settings')['database']);
-	//$capsule->setAsGlobal();
-	//$capsule->bootEloquent();
 	return $capsule;
 };
 
-$container['db']->setAsGlobal();
-$container['db']->bootEloquent();
+$container->db->setAsGlobal();
+$container->db->bootEloquent();
+$container->db->connection()->setEventDispatcher(new Illuminate\Events\Dispatcher(new Illuminate\Container\Container));
+// Listening to all queries
+$container->db->connection()->listen(function ($query) use ($app) {
+  $app->getContainer()->logger->addInfo($query->sql);
+});
