@@ -52,6 +52,23 @@ myControllers.controller('UsersEditCtrl', ['$scope', '$state', '$http', 'MY_CONF
 			});
 	}
 	
+	$scope.submit_form_pass = function(data) {
+		$http.post(MY_CONFIG.API_USER_CHPASS + "/" + $stateParams.id, data)
+			.success(function (response) {
+				if (response.status == 'OK') {  $state.go('users'); flash('success', response.message); }
+				if (response.status == 'ERROR') alert(response.message);
+				if (response.status == 'AUTH ERROR') {
+					AuthenticationService.ClearCredentials();
+					$state.go('login');
+				}
+				$scope.data_loading = false;
+			})
+			.error(function(data, status, headers, config) {
+				alert(JSON.stringify({data: data}));
+				$scope.data_loading = false;
+			});
+	}
+	
 	$scope.delete_user = function($id) {
 		$scope.data_loading = true;
 		$http.get(MY_CONFIG.API_USER_DELETE + "/" + $id)

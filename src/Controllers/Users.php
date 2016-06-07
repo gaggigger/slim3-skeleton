@@ -27,7 +27,7 @@ class Users {
 	}
 	
 	public function get($request, $response, $args) {
-		$ret = array("status" => "ERROR", "message" => "unknown data1");
+		$ret = array("status" => "ERROR", "message" => "unknown data");
 		$data = \App\Models\Users::where('id', $args['id'])->select('username', 'first_name', 'last_name', 'email', 'group_admin')->first();
 		if ($data) {
 			$ret = array(
@@ -40,7 +40,7 @@ class Users {
 	}
 	
 	public function update($request, $response, $args) {
-		$ret = array("status" => "ERROR", "message" => "unknown data2");
+		$ret = array("status" => "ERROR", "message" => "unknown data");
 		$data = $request->getParams();
 		$user = \App\Models\Users::find($args['id']);
 		if ($user) {
@@ -64,8 +64,29 @@ class Users {
 		return $response->withJson($ret);
 	}
 	
+	public function chpass($request, $response, $args) {
+		$ret = array("status" => "ERROR", "message" => "unknown data");
+		$data = $request->getParams();
+		$user = \App\Models\Users::find($args['id']);
+		if ($user) {
+			try {
+				$user->password = password_hash($data['password'], PASSWORD_DEFAULT);
+			} catch (Exception $e) {
+				$ret = array("status" => "ERROR", "message" => $e->getMessage());
+				return $response->withJson($ret);
+			}
+			try {
+				$user->save();
+				$ret = array("status" => "OK", "message" => "user password changed");
+			} catch (\Illuminate\Database\QueryException $e) {
+				$ret = array("status" => "ERROR", "message" => $e->getMessage());
+			}
+		}
+		return $response->withJson($ret);
+	}
+	
 	public function delete($request, $response, $args) {
-		$ret = array("status" => "ERROR", "message" => "unknown data3");
+		$ret = array("status" => "ERROR", "message" => "unknown data");
 		if (\App\Models\Users::destroy($args['id'])) {
 			\App\Models\UserTokens::where('user_id', $args['id'])->delete();
 			$ret = array("status" => "OK", "message" => "user deleted");

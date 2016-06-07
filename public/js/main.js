@@ -11,6 +11,7 @@ myApp.constant("MY_CONFIG", {
 		"API_REFRESH_TOKEN": API_SERVER + "/refreshToken",
 		"API_USERS": API_SERVER + "/users",
 		"API_USER_UPDATE": API_SERVER + "/userupdate",
+		"API_USER_CHPASS": API_SERVER + "/userchpass",
 		"API_USER_DELETE": API_SERVER + "/userdelete",
 });
 
@@ -207,6 +208,23 @@ myControllers.controller('UsersEditCtrl', ['$scope', '$state', '$http', 'MY_CONF
 	$scope.submit_form = function(data) {
 		$scope.data_loading = true;
 		$http.post(MY_CONFIG.API_USER_UPDATE + "/" + $stateParams.id, data)
+			.success(function (response) {
+				if (response.status == 'OK') {  $state.go('users'); flash('success', response.message); }
+				if (response.status == 'ERROR') alert(response.message);
+				if (response.status == 'AUTH ERROR') {
+					AuthenticationService.ClearCredentials();
+					$state.go('login');
+				}
+				$scope.data_loading = false;
+			})
+			.error(function(data, status, headers, config) {
+				alert(JSON.stringify({data: data}));
+				$scope.data_loading = false;
+			});
+	}
+	
+	$scope.submit_form_pass = function(data) {
+		$http.post(MY_CONFIG.API_USER_CHPASS + "/" + $stateParams.id, data)
 			.success(function (response) {
 				if (response.status == 'OK') {  $state.go('users'); flash('success', response.message); }
 				if (response.status == 'ERROR') alert(response.message);

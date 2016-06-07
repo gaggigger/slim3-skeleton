@@ -11,6 +11,7 @@ myApp.constant("MY_CONFIG", {
 		"API_REFRESH_TOKEN": API_SERVER + "/refreshToken",
 		"API_USERS": API_SERVER + "/users",
 		"API_USER_UPDATE": API_SERVER + "/userupdate",
+		"API_USER_CHPASS": API_SERVER + "/userchpass",
 		"API_USER_DELETE": API_SERVER + "/userdelete",
 });
 
