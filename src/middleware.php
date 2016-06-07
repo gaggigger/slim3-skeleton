@@ -15,9 +15,9 @@ class AuthMw
 
 	public function __invoke($request, $response, $next)
 	{
-		//$this->ci->logger->addInfo('grupe sa dozvolom: '.json_encode($this->groups));
 		if ($request->hasHeader('Authorization')) {
-			$user_token = \App\Models\UserTokens::where('token', '=', $request->getHeaderLine('Authorization'))->where('valid_to', '>', date('Y-m-d H:i:s'))->first();
+			$user_token = \App\Models\UserTokens::where('token', '=', $request->getHeader('Authorization'))->where('valid_to', '>', date('Y-m-d H:i:s'))->first();
+			//$this->ci->logger->addDebug('Authorization', $request->getHeader('Authorization'));
 			if ($user_token) {
 				if (\App\Models\Users::isUserInGroup($user_token->user_id, $this->groups)) {
 					return $next($request, $response);
