@@ -14,8 +14,9 @@ $container['logger'] = function ($c) {
     $settings = $c->get('settings')['logger'];
     $logger = new Monolog\Logger($settings['name']);
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
-    $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], Monolog\Logger::DEBUG));
-    return $logger;
+    if ($settings['level'] == 'debug') $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], Monolog\Logger::DEBUG));
+	else $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], Monolog\Logger::INFO));
+	return $logger;
 };
 
 // database
@@ -29,5 +30,5 @@ $container->db->setAsGlobal();
 $container->db->bootEloquent();
 $container->db->connection()->setEventDispatcher(new Illuminate\Events\Dispatcher(new Illuminate\Container\Container));
 $container->db->connection()->listen(function ($query) use ($app) {
-	$app->getContainer()->logger->addDebug('['.($query->time * 1000).' ms] ['.$query->sql.']');
+	$app->getContainer()->logger->addDebug('{'.($query->time * 1000).' ms} {'.$query->sql.'}', $query->bindings);
 });
