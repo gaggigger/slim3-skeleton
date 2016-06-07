@@ -28,7 +28,6 @@ $container['db'] = function ($c) {
 $container->db->setAsGlobal();
 $container->db->bootEloquent();
 $container->db->connection()->setEventDispatcher(new Illuminate\Events\Dispatcher(new Illuminate\Container\Container));
-// Listening to all queries
 $container->db->connection()->listen(function ($query) use ($app) {
-  $app->getContainer()->logger->addInfo($query->sql);
+	$app->getContainer()->logger->addDebug('['.($query->time * 1000).' ms] ['.$query->sql.']');
 });
