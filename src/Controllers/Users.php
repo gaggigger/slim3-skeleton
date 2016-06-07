@@ -56,7 +56,7 @@ class Users {
 			}
 			try {
 				$user->save();
-				$ret = array("status" => "OK", "message" => "user updated");
+				$ret = array("status" => "OK", "message" => "User ".$user->username." updated");
 			} catch (\Illuminate\Database\QueryException $e) {
 				$ret = array("status" => "ERROR", "message" => $e->getMessage());
 			}
@@ -77,7 +77,7 @@ class Users {
 			}
 			try {
 				$user->save();
-				$ret = array("status" => "OK", "message" => "user password changed");
+				$ret = array("status" => "OK", "message" => "Password changed for user ".$user->username);
 			} catch (\Illuminate\Database\QueryException $e) {
 				$ret = array("status" => "ERROR", "message" => $e->getMessage());
 			}
@@ -89,7 +89,7 @@ class Users {
 		$ret = array("status" => "ERROR", "message" => "unknown data");
 		if (\App\Models\Users::destroy($args['id'])) {
 			\App\Models\UserTokens::where('user_id', $args['id'])->delete();
-			$ret = array("status" => "OK", "message" => "user deleted");
+			$ret = array("status" => "OK", "message" => "User deleted");
 		}
 		return $response->withJson($ret);
 	}
@@ -111,7 +111,7 @@ class Users {
 		}
 		try {
 			$user->save();
-			$ret = array("status" => "OK", "message" => "new user saved");
+			$ret = array("status" => "OK", "message" => "Created user ".$user->username);
 		} catch (\Illuminate\Database\QueryException $e) {
 			$ret = array("status" => "ERROR", "message" => $e->getMessage());
 		}		

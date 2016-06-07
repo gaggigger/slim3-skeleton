@@ -53,7 +53,7 @@
 							<button ng-hide="data_loading"  ng-click="submit_form(form)" class="btn btn-primary">Update</button>
 							<a ng-hide="data_loading" ui-sref="users" class="btn btn-default">Close</a>
 							<button ng-show="data_loading" class="btn btn-default"><span class="glyphicon glyphicon-refresh spin"></span></button>
-							<button ng-hide="data_loading" ng-click="delete_user(user_id)" class="btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+							<button ng-hide="data_loading" ng-confirm-click="Permanetly delete user ?" confirmed-click="delete_user(user_id)" class="btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span> Delete</button>
 						</div>
 					</div>
 				</form>
