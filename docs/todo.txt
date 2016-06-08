@@ -1,6 +1,6 @@
 - smart tables for angular za tablicu usera
-- provjeriti unique usera
 ---------------
++ provjeriti unique usera
 + postavljanje menija (nakon logina broadcast grupa prema sidebarCtrl-u)
 + kreiranje usera
 + editiranje usera

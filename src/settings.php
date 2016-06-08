@@ -1,19 +1,19 @@
 <?php
 return [
-    'settings' => [
-        'displayErrorDetails' => true, // set to false in production
+	'settings' => [
+		'displayErrorDetails' => true, // set to false in production
 
-        // Renderer settings
-        'renderer' => [
-            'template_path' => __DIR__ . '/../templates/',
-        ],
+		// Renderer settings
+		'renderer' => [
+			'template_path' => __DIR__ . '/../templates/',
+		],
 
-        // Monolog settings
-        'logger' => [
-            'name' => 'LOG',
-            'path' => __DIR__ . '/../logs/'.date('Y-m').'.log',
+		// Monolog settings
+		'logger' => [
+			'name' => 'LOG',
+			'path' => __DIR__ . '/../logs/'.date('Y-m').'.log',
 			'debug' => true, //set to false in production
-        ],
+		],
 		// Database settings
 		'database' => [
 			'driver'   => 'mysql',
@@ -24,7 +24,7 @@ return [
 			'charset'  => 'utf8mb4',
 			'collation'=> 'utf8mb4_unicode_ci',
 			'prefix'   => '',
-        ],
+		],
 		// App settings
 		'app_name' => 'Slim3 skeleton',
 		'login_token_valid_days' => 10,
