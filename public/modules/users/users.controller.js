@@ -39,7 +39,7 @@ myControllers.controller('UsersEditCtrl', ['$scope', '$state', '$http', 'MY_CONF
 		$http.post(MY_CONFIG.API_USER_UPDATE + "/" + $stateParams.id, data)
 			.success(function (response) {
 				if (response.status == 'OK') {  $state.go('users'); flash('success', response.message); }
-				if (response.status == 'ERROR') alert(response.message);
+				if (response.status == 'ERROR') $scope.errors = response.message;
 				if (response.status == 'AUTH ERROR') {
 					AuthenticationService.ClearCredentials();
 					$state.go('login');
@@ -56,7 +56,7 @@ myControllers.controller('UsersEditCtrl', ['$scope', '$state', '$http', 'MY_CONF
 		$http.post(MY_CONFIG.API_USER_CHPASS + "/" + $stateParams.id, data)
 			.success(function (response) {
 				if (response.status == 'OK') {  $state.go('users'); flash('success', response.message); }
-				if (response.status == 'ERROR') alert(response.message);
+				if (response.status == 'ERROR') $scope.errors = response.message;
 				if (response.status == 'AUTH ERROR') {
 					AuthenticationService.ClearCredentials();
 					$state.go('login');
@@ -74,7 +74,7 @@ myControllers.controller('UsersEditCtrl', ['$scope', '$state', '$http', 'MY_CONF
 		$http.get(MY_CONFIG.API_USER_DELETE + "/" + $id)
 			.success(function (response) {
 				if (response.status == 'OK') { $state.go('users'); flash('success', response.message); }
-				if (response.status == 'ERROR') alert(response.message);
+				if (response.status == 'ERROR') $scope.errors = response.message;
 				if (response.status == 'AUTH ERROR') {
 					AuthenticationService.ClearCredentials();
 					$state.go('login');
@@ -105,6 +105,7 @@ myControllers.controller('UsersEditCtrl', ['$scope', '$state', '$http', 'MY_CONF
 	$scope.form_loading = true;
 	$scope.data_loading = false;
 	$scope.user_id = $stateParams.id;
+	$scope.errors = {};
 }]);
 
 myControllers.controller('UsersAddCtrl', ['$scope', '$state', '$http', 'MY_CONFIG', 'flash', function($scope, $state, $http, MY_CONFIG, flash) {
@@ -114,7 +115,7 @@ myControllers.controller('UsersAddCtrl', ['$scope', '$state', '$http', 'MY_CONFI
 		$http.post(MY_CONFIG.API_USERS, data)
 			.success(function (response) {
 				if (response.status == 'OK') { $state.go('users'); flash('success', response.message); }
-				if (response.status == 'ERROR') alert(response.message);
+				if (response.status == 'ERROR') $scope.errors = response.message;
 				if (response.status == 'AUTH ERROR') {
 					AuthenticationService.ClearCredentials();
 					$state.go('login');
@@ -135,6 +136,7 @@ myControllers.controller('UsersAddCtrl', ['$scope', '$state', '$http', 'MY_CONFI
 		last_name: '',
 		email: '',
 		group_admin: 0
-	} //ovo moram da imam defaultnu vrijednost, jer se property na modelu kreira tek kad nesto promjenim
+	} //ovo moram imat defaultnu vrijednost, jer se property na modelu kreira tek kad nesto promjenim
+	$scope.errors = {};
 	
 }]);

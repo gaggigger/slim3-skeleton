@@ -17,7 +17,8 @@
         "slim/php-view": "^2.1",
         "monolog/monolog": "^1.19",
 		"illuminate/database": "5.2.*",
-        "illuminate/events": "^5.2"
+        "illuminate/events": "^5.2",
+        "vlucas/valitron": "^1.2"
     },
 	"autoload": {
 		"psr-4": {
