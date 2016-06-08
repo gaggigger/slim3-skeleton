@@ -43,8 +43,13 @@ class Users {
 		$ret = array("status" => "ERROR", "message" => ['info'=>"unknown data"]);
 		$data = $request->getParams();
 		//validate data
+		\Valitron\Validator::addRule('userUnique', function($field, $value, array $params, array $fields) {
+    		$count = \App\Models\Users::where('username', $value)->where('id', '<>', $params[0])->count();
+			return ($count < 1);
+		}, 'allready exists');
 		$rules = [
 			'required'		=> [['username']],
+			'userUnique'	=> [['username',$args['id']]],
 			'lengthBetween' => [['username',4,50]],
 			'alphaNum'		=> [['username']],
 			'email'			=> [['email']],
@@ -124,8 +129,13 @@ class Users {
 	public function add($request, $response, $args) {
 		$data = $request->getParams();
 		//validate data
+		\Valitron\Validator::addRule('userUnique', function($field, $value, array $params, array $fields) {
+    		$count = \App\Models\Users::where('username', $value)->count();
+			return ($count < 1);
+		}, 'allready exists');
 		$rules = [
 			'required'		=> [['username'], ['password']],
+			'userUnique'	=> [['username']],
 			'lengthBetween' => [['username',4,50],['password',6,50]],
 			'different'		=> [['password','username']],
 			'alphaNum'		=> [['username']],
@@ -138,7 +148,7 @@ class Users {
 			$ret = array("status" => "ERROR", "message" => $v->errors());
 			return $response->withJson($ret);
 		}
-		//update user
+		//add user
 		try {
 			$user = new \App\Models\Users();
 			$user->username = $data['username'];
