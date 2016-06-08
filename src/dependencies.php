@@ -30,5 +30,5 @@ $container->db->setAsGlobal();
 $container->db->bootEloquent();
 $container->db->connection()->setEventDispatcher(new Illuminate\Events\Dispatcher(new Illuminate\Container\Container));
 $container->db->connection()->listen(function ($query) use ($app) {
-	$app->getContainer()->logger->addDebug('{'.($query->time * 1000).' ms} {'.$query->sql.'}', $query->bindings);
+	$app->getContainer()->logger->addDebug('{'.$query->time.' ms} {'.$query->sql.'}', $query->bindings);
 });
