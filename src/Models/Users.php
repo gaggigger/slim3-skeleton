@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model as Model;
 
 class Users extends Model {
-	
+
+	protected $casts = [
+    	'group_admin' => 'integer',
+	];
 	protected $table = 'users';
 	public $timestamps = true;
-	
+
 	public static function isUserInGroup($_user_id, $_route_groups) {
 		//check global group
 		if (in_array('all', $_route_groups)) {
@@ -24,9 +27,9 @@ class Users extends Model {
 						return true;
 					}
 				}
-			}	
+			}
 		}
 		return false;
 	}
-	
+
 }
