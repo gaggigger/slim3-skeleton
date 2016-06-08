@@ -58,7 +58,7 @@ class Authentication {
 	// ==================================================
 	public function refresh_token($request, $response, $args) {
 		
-		$token = $request->getBody();
+		$token = $request->getBody()->getContents();
 		
 		$ret = array(
 			"status" => "ERROR",
