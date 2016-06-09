@@ -1,35 +1,25 @@
-myControllers.controller('UsersCtrl', ['$scope', '$state', '$http', 'MY_CONFIG', 'AuthenticationService', function($scope, $state, $http, MY_CONFIG, AuthenticationService) {
-	
-	$scope.load_data = function (page, pageSize) {
-		$scope.data_loading = true;
-		$http.get(MY_CONFIG.API_USERS + "/" + page + "/" + pageSize)
-			.success(function (response) {
-				if (response.status == 'OK') {
-					$scope.data = response.data.items;
-					$scope.totalItems = response.data.totalItems;
-					$scope.totalPages = Math.ceil(response.data.totalItems/pageSize);
-					$scope.page = page;
-				}
-				if (response.status == 'ERROR') alert(response.message);
-				if (response.status == 'AUTH ERROR') {
-					AuthenticationService.ClearCredentials();
-					$state.go('login');
-				}
-				$scope.data_loading = false;
-			})
-			.error(function(data, status, headers, config) {
-				alert(JSON.stringify({data: data}));
-				$scope.data_loading = false;
-			});
-	};
-	
-	$scope.data_loading = false;
-	$scope.data = null;
-	$scope.page = 1;
-	$scope.pageSize = 5;
-	$scope.totalItems = 0;
-	$scope.load_data($scope.page, $scope.pageSize);
-	
+myControllers.controller('UsersCtrl', ['$rootScope', '$scope', '$state', '$http', 'MY_CONFIG', 'DTOptionsBuilder', 'DTColumnBuilder', function($rootScope, $scope, $state, $http, MY_CONFIG, DTOptionsBuilder, DTColumnBuilder) {
+
+	$scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
+		url: MY_CONFIG.API_USERS + "/table",
+		type: 'POST',
+		beforeSend: function (request) {
+			request.setRequestHeader("Authorization", $rootScope.currentUser.token);
+		}
+	}).withDataProp('data')
+		.withOption('processing', false)
+		.withOption('serverSide', true);
+	$scope.dtColumns = [
+        DTColumnBuilder.newColumn('id').withTitle('ID'),
+        DTColumnBuilder.newColumn('username').withTitle('Username'),
+		DTColumnBuilder.newColumn('first_name').withTitle('First name'),
+        DTColumnBuilder.newColumn('last_name').withTitle('Last name'),
+		DTColumnBuilder.newColumn('email').withTitle('Email'),
+		DTColumnBuilder.newColumn('group_admin').withTitle('Admin'),
+		DTColumnBuilder.newColumn('created_at').withTitle('Created').withOption('bSearchable', false),
+		DTColumnBuilder.newColumn('updated_at').withTitle('Modified').withOption('bSearchable', false)
+    ];
+
 }]);
 
 myControllers.controller('UsersEditCtrl', ['$scope', '$state', '$http', 'MY_CONFIG', '$stateParams', 'flash', function($scope, $state, $http, MY_CONFIG, $stateParams, flash) {

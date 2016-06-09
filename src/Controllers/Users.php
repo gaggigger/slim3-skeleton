@@ -10,18 +10,30 @@ class Users {
 		$this->ci = $ci;
 	}
 
-	public function getall($request, $response, $args) {
+	public function table($request, $response, $args) {
+		$input = $request->getParams();
+		//total records count
+		$query = \App\Models\Users::query(); 
+		$total = $query->count();
+		$total_filtered = $total;
+		//filtered records count
+		if (strlen($input['search']['value']) > 1) {
+			$search_string = "%".$input['search']['value']."%";
+			foreach ($input['columns'] as $c) {
+				if ($c['searchable'] == "true") $query->orWhere($c['data'], 'like', $search_string);
+			}
+			$total_filtered = $query->count();
+		}
+		//data
 		$ret = array(
-			"status" => "OK",
-			"message" => "data fetched",
-			"data" => array(
-				"items" => \App\Models\Users::select('id', 'username', 'first_name', 'last_name', 'email', 'group_admin', 'updated_at', 'created_at')
-								->orderBy('id', 'asc')
-								->skip(($args['page']-1)*$args['pageSize'])
-								->take($args['pageSize'])
-								->get(),
-				"totalItems" => \App\Models\Users::count()
-			)
+			"draw" => $input['draw'],
+			"recordsTotal" => $total,
+			"recordsFiltered" => $total_filtered,
+			"data" => $query->select('id', 'username', 'first_name', 'last_name', 'email', 'group_admin', 'updated_at', 'created_at')
+				->orderBy($input['columns'][(int)$input['order'][0]['column']]['data'], $input['order'][0]['dir'])
+				->skip($input['start'])
+				->take($input['length'])
+				->get()
 		);
 		return $response->withJson($ret);
 	}

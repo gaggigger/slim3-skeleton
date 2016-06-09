@@ -12,7 +12,7 @@ return [
 		'logger' => [
 			'name' => 'LOG',
 			'path' => __DIR__ . '/../logs/'.date('Y-m').'.log',
-			'debug' => true, //set to false in production
+			'debug' => false, //set to false in production
 		],
 		// Database settings
 		'database' => [
