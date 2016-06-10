@@ -11,7 +11,9 @@ myControllers.controller('UsersCtrl', ['$rootScope', '$scope', '$state', '$http'
 		.withOption('serverSide', true);
 	$scope.dtColumns = [
         DTColumnBuilder.newColumn('id').withTitle('ID'),
-        DTColumnBuilder.newColumn('username').withTitle('Username'),
+        DTColumnBuilder.newColumn('username').withTitle('Username').renderWith(function(data, type, full) {
+            return '<a href="/#/users/'+full.id+'">' + data + '</a>';
+        }),
 		DTColumnBuilder.newColumn('first_name').withTitle('First name'),
         DTColumnBuilder.newColumn('last_name').withTitle('Last name'),
 		DTColumnBuilder.newColumn('email').withTitle('Email'),
