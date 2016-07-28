@@ -29,7 +29,7 @@ myControllers.controller('UsersEditCtrl', ['$scope', '$state', '$http', 'MY_CONF
 		$scope.data_loading = true;
 		$http.post(MY_CONFIG.API_USER_UPDATE + "/" + $stateParams.id, data)
 			.success(function (response) {
-				if (response.status == 'OK') {  $state.go('users'); flash('success', response.message); }
+				if (response.status == 'OK') {  flash('success', response.message); $state.go('users'); }
 				if (response.status == 'ERROR') $scope.errors = response.message;
 				if (response.status == 'AUTH ERROR') {
 					AuthenticationService.ClearCredentials();
@@ -44,6 +44,7 @@ myControllers.controller('UsersEditCtrl', ['$scope', '$state', '$http', 'MY_CONF
 	}
 	
 	$scope.submit_form_pass = function(data) {
+		$scope.data_loading = true;
 		$http.post(MY_CONFIG.API_USER_CHPASS + "/" + $stateParams.id, data)
 			.success(function (response) {
 				if (response.status == 'OK') {  $state.go('users'); flash('success', response.message); }

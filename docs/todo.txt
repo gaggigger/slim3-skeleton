@@ -1,5 +1,8 @@
-
+- pocistiti rootscope u usersview controleru
+- srediti loading notifikaciju na datatables-u
+- napraviti hover na datatables kad stavim na header colone miš i idem sortirati
 ---------------
++ srediti ikone za sortiranje
 + datatables for angular za tablicu usera
 + provjeriti unique usera
 + postavljanje menija (nakon logina broadcast grupa prema sidebarCtrl-u)
