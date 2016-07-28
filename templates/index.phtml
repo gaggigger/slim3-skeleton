@@ -5,18 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php echo $app_name; ?></title>
 
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/styles.css" rel="stylesheet">
-<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="css/uikit_almost_flat.min.css" rel="stylesheet">
+<link href="css/datatables.uikit.min.css" rel="stylesheet">
 <link href="css/app.css" rel="stylesheet">
 
-<!--icons-->
-<script src="js/lumino.glyphs.js"></script>
 <!-- js -->
 <script src="js/jquery-1.12.4.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.dataTables.js"></script>
-<script src="js/dataTables.bootstrap.js"></script>
+<script src="js/dataTables.uikit.js"></script>
 <!-- angular -->
 <script src="js/angular_1.5.2.min.js"></script>
 <script src="js/angular-datatables.min.js"></script>
@@ -35,33 +31,39 @@
 
 <body>
 	
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="/"><?php echo $app_name; ?></a>
+	<nav class="uk-navbar uk-navbar-attached">
+		<div class="uk-container uk-container-center">
+			<a href="/" class="uk-navbar-brand"><?php echo $app_name; ?></a>
+			<div class="uk-navbar-flip">
+				<div class="uk-navbar-content" ng-show="currentUser.fullname">
+					<i class="uk-icon-user"></i> {{currentUser.fullname}}
+				</div>
 			</div>
-							
-		</div><!-- /.container-fluid -->
+		</div>
 	</nav>
-			
-	<div ng-controller="SidebarCtrl">
-		<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar" ng-show="currentUser.fullname">
-			<div class="app-user-container">
-				<svg style="width: 25px; height: 25px; stroke-width: 3px;"><use xlink:href="#stroked-male-user"/></svg><br />
-				{{currentUser.fullname}}<br />
-				<a class="" ui-sref="logout">Logout</a>
+
+	<div class="uk-container uk-container-center">
+
+		<div class="uk-grid uk-grid-margin">
+
+			<div class="uk-width-medium-1-5" ng-controller="SidebarCtrl" ng-show="currentUser.fullname">
+				<div class="uk-panel uk-panel-box">
+					<ul data-uk-nav="" class="uk-nav uk-nav-side uk-nav-parent-icon">
+						<li class="uk-nav-header">Menu</li>
+						<li class="uk-nav-divider"></li>
+						<li ng-class="{'uk-active': isActive('/dashboard')}"><a ui-sref="dashboard"><i class="uk-icon-dashboard uk-icon-justify"></i> Dashboard</a></li>
+						<li ng-class="{'uk-active': isActive('/users')}" ng-show="currentUser.groups.admin == 1" ><a ui-sref="users"><i class="uk-icon-users uk-icon-justify"></i> Users</a></li>
+						<li><a ui-sref="logout"><i class="uk-icon-power-off uk-icon-justify"></i> Logout</a></li>
+					</ul>
+				</div>
 			</div>
-			<ul class="nav menu">
-				<li ng-class="{active: isActive('/dashboard')}"><a ui-sref="dashboard"><svg class="glyph stroked dashboard dial"><use xlink:href="#stroked-dashboard-dial"/></svg> Dashboard</a></li>
-				<li ng-class="{active: isActive('/users')}" ng-show="currentUser.groups.admin == 1" ><a ui-sref="users"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"/></svg> Users</a></li>
-			</ul>
-		</div><!--/.sidebar-->
+			
+			<div class="uk-width-medium-4-5">
+				<div ui-view></div>
+			</div>
+
+		</div>
+
 	</div>
 			
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 flash-msg">
@@ -70,11 +72,6 @@
 	
 	</div>
 	
-	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
-			
-		<div ui-view></div>
-	
-	</div>	<!--/.main-->
 	
 </body>
 
