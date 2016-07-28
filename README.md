@@ -24,7 +24,7 @@ MySQL: >=5.5.3
   * Eloquent ORM - https://laravel.com/docs/4.2/eloquent
 2. Frontend
   * AngularJS 1.5.2
-  * Lumino admin template (Bootstrap v3.2.0) - http://medialoot.com/item/lumino-admin-bootstrap-template/
+  * uikit - http://getuikit.com/docs/core.html
   * Gulp 
 
 Before changing frontend go to /public folder and install gulp and gulp modules:
