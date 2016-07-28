@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php echo $app_name; ?></title>
 
-<link href="css/uikit_almost_flat.min.css" rel="stylesheet">
+<link href="libs/uikit/css/uikit.almost-flat.min.css" rel="stylesheet">
 <link href="css/datatables.uikit.min.css" rel="stylesheet">
 <link href="css/app.css" rel="stylesheet">
 
@@ -56,6 +56,7 @@
 						<li><a ui-sref="logout"><i class="uk-icon-power-off uk-icon-justify"></i> Logout</a></li>
 					</ul>
 				</div>
+				<flash:messages></flash:messages>
 			</div>
 			
 			<div class="uk-width-medium-4-5">
@@ -65,14 +66,7 @@
 		</div>
 
 	</div>
-			
-	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 flash-msg">
-	
-		<flash:messages></flash:messages>
-	
-	</div>
-	
-	
+
 </body>
 
 </html>
