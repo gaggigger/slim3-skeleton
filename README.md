@@ -9,7 +9,7 @@ Single-page application skeleton built with Slim3 PHP framework as backend and A
 1. copy files to server and configure web server to serve /public folder. Web is Slim PHP site so configure web server accordingly (http://www.slimframework.com/docs/start/web-servers.html)
 2. create and configure database (use SQL statements in /docs/sql.txt file)
 3. configure application settings in /src/settings.php
-4. create directory /logs and make sure is writeable by web server
+4. create directory /logs and make sure it's writeable by web server
 5. open web site and log in with: test / test123
 
 ## Requirements
