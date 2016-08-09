@@ -204,6 +204,7 @@ myControllers.controller('UsersCtrl', ['$rootScope', '$scope', '$state', '$http'
 		DTColumnBuilder.newColumn('email').withTitle('Email'),
 		DTColumnBuilder.newColumn('group_admin').withTitle('Admin'),
 		DTColumnBuilder.newColumn('created_at').withTitle('Created').withOption('bSearchable', false),
+		DTColumnBuilder.newColumn('updated_at').withTitle('Updated').withOption('bSearchable', false),
     ];
 
 }]);

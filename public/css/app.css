@@ -1,5 +1,43 @@
-.flash-msg{
+.app-flash-msg{
 	padding-left: 0;
     padding-right: 0;
 	text-align: center;
+}
+
+.app-navbar {
+	background-color: #32A6D5;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+.app-navbar > .uk-navbar-brand {
+	color: white;
+	text-shadow: none;
+}
+
+.app-navbar > .uk-navbar-flip > .uk-navbar-content {
+	color: white;
+	text-shadow: none;
+}
+
+.app-navbar > .uk-navbar-flip > .uk-navbar-nav > li > a {
+	color: white;
+	text-shadow: none;
+}
+
+.app-navbar > .uk-navbar-flip > .uk-navbar-nav > li > a:hover {
+	color: white;
+	text-shadow: none;
+	background-color: #56B9DF;
+}
+
+.app-sidebar {
+	background: #FAFAFA;
+	overflow: auto;
+}
+
+.app-container {
+	padding: 16px 20px 30px 20px;
+	overflow-x: auto;
 }

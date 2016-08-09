@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html lang="en" class="uk-height-1-1" ng-app="myApp">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,40 +30,37 @@
 
 </head>
 
-<body>
-	
-	<nav class="uk-navbar uk-navbar-attached">
-		<div class="uk-container uk-container-center">
-			<a href="/" class="uk-navbar-brand"><?php echo $app_name; ?></a>
-			<div class="uk-navbar-flip">
-				<div class="uk-navbar-content" ng-show="currentUser.fullname">
-					<i class="uk-icon-user"></i> {{currentUser.fullname}}
-				</div>
-			</div>
+<body class="uk-height-1-1" style="padding-top: 42px;">
+
+	<nav class="uk-navbar uk-navbar-attached app-navbar">
+		<a href="/" class="uk-navbar-brand"><?php echo $app_name; ?></a>
+		<div class="uk-navbar-flip" ng-show="currentUser.fullname">
+			<ul class="uk-navbar-nav">
+				<li><a href="/"><i class="uk-icon-user"></i> {{currentUser.fullname}}</a></li>
+				<li><a ui-sref="logout"><i class="uk-icon-power-off uk-icon-justify"></i> Log out</a></li>
+			</ul>
 		</div>
 	</nav>
 
-	<div class="uk-container uk-container-center">
 
-		<div class="uk-grid uk-grid-margin">
-
-			<div class="uk-width-medium-1-5" ng-controller="SidebarCtrl" ng-show="currentUser.fullname">
-				<div class="uk-panel uk-panel-box">
-					<ul data-uk-nav="" class="uk-nav uk-nav-side uk-nav-parent-icon">
-						<li class="uk-nav-header">Menu</li>
-						<li class="uk-nav-divider"></li>
-						<li ng-class="{'uk-active': isActive('/dashboard')}"><a ui-sref="dashboard"><i class="uk-icon-dashboard uk-icon-justify"></i> Dashboard</a></li>
-						<li ng-class="{'uk-active': isActive('/users')}" ng-show="currentUser.groups.admin == 1" ><a ui-sref="users"><i class="uk-icon-users uk-icon-justify"></i> Users</a></li>
-						<li><a ui-sref="logout"><i class="uk-icon-power-off uk-icon-justify"></i> Logout</a></li>
-					</ul>
-				</div>
-				<flash:messages></flash:messages>
+	<div class="uk-grid uk-height-1-1">
+		
+		<div class="uk-width-medium-1-6 app-sidebar" ng-controller="SidebarCtrl" ng-show="currentUser.fullname">
+			<div class="uk-text-center">
+				<form class="uk-form uk-margin-top uk-margin-bottom">
+					<div class="uk-form-icon"><i class="uk-icon-search"></i><input type="text"></div>
+				</form>
 			</div>
-			
-			<div class="uk-width-medium-4-5">
-				<div ui-view></div>
-			</div>
-
+			<ul data-uk-nav="" class="uk-nav uk-nav-side uk-nav-parent-icon">
+				<li class="uk-nav-divider"></li>
+				<li ng-class="{'uk-active': isActive('/dashboard')}"><a ui-sref="dashboard"><i class="uk-icon-dashboard uk-icon-justify"></i> Dashboard</a></li>
+				<li ng-class="{'uk-active': isActive('/users')}" ng-show="currentUser.groups.admin == 1" ><a ui-sref="users"><i class="uk-icon-users uk-icon-justify"></i> Users</a></li>
+			</ul>
+		</div>
+		
+		<div class="uk-width-medium-5-6 uk-height-1-1 uk-padding-remove" style="overflow-y: auto;">
+			<flash:messages></flash:messages>
+			<div class="app-container" ui-view></div>
 		</div>
 
 	</div>
