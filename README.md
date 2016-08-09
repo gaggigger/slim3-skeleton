@@ -2,7 +2,7 @@
 
 ## Description
 
-Single-page application skeleton with Slim3 PHP framework as backend and AngularJS as frontend. 
+Single-page application skeleton built with Slim3 PHP framework as backend and AngularJS as frontend. 
 
 ## Installation and configuration
 
